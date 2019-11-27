@@ -1,0 +1,16 @@
+/*******************************/
+/***         WRAPPER       ***/
+/****************************/
+
+.section__home__wrapper{
+  @include wrapper(550px, 0, 0);
+}
+
+.wrapper
+{
+  @include wrapper(1200px, 2em, 2em)
+}
+
+.wrapper--mid{
+  @include wrapper(900px, 2em, 2em)
+}

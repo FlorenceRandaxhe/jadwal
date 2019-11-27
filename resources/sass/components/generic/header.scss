@@ -1,0 +1,111 @@
+/*******************************/
+/***         HEADER        ***/
+/****************************/
+.header{
+  background-color: $black;
+  color: $white;
+  box-shadow: $small_shadow;
+  &__wrapper{
+    height: 100%;
+    padding: 1em 0 1em 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+    @include mq('tablet-wide'){
+      padding: 1em 0 1em 10px;
+    }
+  }
+}
+
+.header__admin{
+  z-index: 1;
+  height: 100vh;
+  position: fixed;
+  width: 65px;
+  transition: 0.3s;
+  overflow-x: hidden;
+}
+.header__admin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.header__admin::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(157, 157, 157, 0.3);
+  border-radius: 10px;
+}
+
+.header__admin::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  box-shadow: inset 0 0 6px rgba(120, 120, 120, 0.5);
+}
+
+.main__admin{
+  margin-left: 65px;
+  flex-basis: 100%;
+}
+
+.header__nav__item{
+  padding: 10px;
+  margin: 1em 0;
+  border-radius: 3px;
+  transition: 0.3s;
+  &--current {
+   // background-color: rgba(172, 206, 212, 0.42);
+    background-color: #636b6f;
+    svg{
+      stroke:$white;
+    }
+  }
+  &:hover:not(.header__nav__item--current){
+    //background-color: $grey;
+    background-color: rgba(99, 107, 111, 0.54);
+    transition: 0.3s;
+  }
+}
+
+.header__nav__item__link{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.svg__icon__menu{
+  margin-right: 15px;
+  flex: 0 0 24px;
+  stroke: $grey;
+}
+
+.header__nav__item__hide{
+  flex: 0 0 130px;
+}
+@media only screen and (max-width:70em) {
+  .header__nav__item__hide,
+  .logo__sidebar__text{
+    visibility: hidden;
+    transition: 0.3s;
+  }
+
+  .header__admin:hover{
+    width: 200px;
+    transition: 0.3s;
+  }
+  .header__admin:hover .header__nav__item__hide,
+  .header__admin:hover .logo__sidebar__text{
+    visibility: visible;
+    transition: 0.3s;
+  }
+}
+
+@media only screen and (min-width:70em) {
+  .logo__sidebar{
+    margin-left: 16px;
+    transition: $timing;
+  }
+  .header__admin{
+    width: 200px;
+  }
+  .main__admin{
+    margin-left: 200px;
+  }
+}

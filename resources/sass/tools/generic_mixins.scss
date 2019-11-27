@@ -1,0 +1,116 @@
+/*******************************/
+/***         MIXINS        ***/
+/****************************/
+
+/***********************************************************
+ * Pseudo element
+ * $display, $position, $content
+ */
+@mixin pseudo ($display: block, $pos: absolute, $content: '')
+{
+  content: $content;
+  display: $display;
+  position: $pos;
+}
+
+/***********************************************************
+ * Font style
+ */
+@mixin font($size: false, $colour: false, $weight: false,  $lh: false)
+{
+  @if $size { font-size: $size; }
+  @if $colour { color: $colour; }
+  @if $weight { font-weight: $weight; }
+  @if $lh { line-height: $lh; }
+}
+
+/***********************************************************
+ * Wrapper
+ */
+@mixin wrapper ($width, $margin_top, $margin_bottom)
+{
+  width: 90%;
+  max-width: $width;
+  margin: $margin_top auto $margin_bottom;
+}
+
+/***********************************************************
+ * Clear fix
+ */
+@mixin clearfix ( $w:both )
+{
+  &:after{
+    content: "";
+    display: block;
+    clear: $w;
+  }
+}
+
+/***********************************************************
+ * Centered element
+ * To quickly centre a block element without having to worry about if there is any top or bottom margin already applied.
+ */
+@mixin push--auto
+{
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
+
+/***********************************************************
+ * Placeholder style
+ */
+@mixin input-placeholder
+{
+  &.placeholder { @content; }
+  &:-moz-placeholder { @content; }
+  &::-moz-placeholder { @content; }
+  &:-ms-input-placeholder { @content; }
+  &::-webkit-input-placeholder { @content; }
+}
+
+/***********************************************************
+ * Responsive ratio
+ */
+
+@mixin responsive-ratio($x,$y, $pseudo: false)
+{
+  $padding: unquote( ( $y / $x ) * 100 + '%' );
+  @if $pseudo {
+    &:before {
+      @include pseudo($pos: relative);
+      width: 100%;
+      padding-top: $padding;
+    }
+  } @else {
+    padding-top: $padding;
+  }
+}
+
+/***********************************************************
+ *
+ * Hide from both screenreaders and browsers
+ */
+@mixin hidden
+{
+  display: none;
+  visibility: hidden;
+}
+
+/**********************************************************
+ *
+ * Hide from browsers but not from screen readers
+ */
+@mixin sro
+{
+  position: absolute;
+  top: -9999px;
+  font-size: 0;
+  text-indent: -9999px;
+  line-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  letter-spacing: 0;
+}

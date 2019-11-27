@@ -1,0 +1,76 @@
+/*******************************/
+/***           FORM        ***/
+/****************************/
+
+/****************************************************
+ * Indicate that certain elements are interactive.
+ */
+button,
+input[type='submit'],
+input[type='button'],
+input[type='reset'],
+input[type='file'],
+input[type='image'],
+label[for] {
+  cursor: pointer;
+}
+
+/****************************************************
+ * Indicate that certain elements are not interactive.
+ */
+button[disabled],
+input[disabled],
+textarea[disabled],
+select[disabled] {
+  cursor: default;
+}
+
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: inherit;
+  box-shadow: 0 0 0 62.5rem #fff inset;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea,
+input::placeholder,
+textarea::placeholder{
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+
+input{
+  font-family: $font_body;
+  font-size: 15px;
+  font-weight: 300;
+  border: none;
+  border-bottom: 1px solid $dark_purple;
+  padding: 0.5em;
+  background-color: transparent;
+  @include input-placeholder{
+    color: #adadad;
+    font-family: $font_body;
+  }
+}
+
+textarea{
+  font-family: $font_body;
+  border-radius: 3px;
+  font-size: 14px;
+  border: 1px solid $dark_purple;
+  padding: 0.5em;
+  background-color: transparent;
+  @include input-placeholder{
+    color: #adadad;
+    font-family: $font_body;
+  }
+}
+input[type='file']{
+  border: none;
+  width: 100%;
+}

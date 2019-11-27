@@ -1,0 +1,100 @@
+/*******************************/
+/***         BUTTON        ***/
+/****************************/
+
+.btn{
+  padding: 0.6em 2em;
+  border-radius: 3px;
+  border: none;
+  font-family: $font_body;
+  font-size: 1em;
+  cursor: pointer;
+  &--icon{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: transparent;
+    padding: 0.3em 1em;
+    color: #636b6f;
+    svg {
+      margin-right: 10px;
+      transition: 0.3s;
+    }
+    &:hover{
+      transition: 0.3s;
+      color: $red;
+      svg {
+        transition: 0.3s;
+        stroke:$red;
+      }
+    }
+  }
+  &--right{
+    text-align: right;
+  }
+  &--small{
+    padding: 0.3em 1em;
+  }
+  &--dark-purple{
+    background-color: $dark_purple;
+    font-weight: 600;
+    border: 2px solid $dark_purple;
+    color: $white;
+    transition: 0.3s;
+    &:hover{
+      transition: 0.3s;
+      background-color: transparent;
+      color: $dark_purple;
+    }
+  }
+  &--purple{
+    background-color: $purple;
+    border: 2px solid $purple;
+    color: $white;
+    transition: 0.3s;
+    &:hover{
+      transition: 0.3s;
+      background-color: transparent;
+      color: $dark_purple;
+    }
+  }
+  &--red{
+    background-color: $red;
+    transition: 0.3s;
+    border: 2px solid $red;
+    color: $white;
+    font-weight: 600;
+    &:hover{
+      transition: 0.3s;
+      background-color: transparent;
+      color: $black;
+    }
+  }
+  &--disabled{
+    background-color: $red;
+    border: 2px solid $red;
+    color: $white;
+    font-weight: 600;
+    opacity: 0.4;
+  }
+  &--pink{
+    background-color: $pink;
+    transition: 0.3s;
+    border: 2px solid $pink;
+    &:hover{
+      transition: 0.3s;
+      background-color:transparent;
+    }
+  }
+  &--purple-outline{
+    border: 2px solid $purple;
+    background-color: transparent;
+    margin-right: 2em;
+    transition: 0.3s;
+    &:hover{
+      transition: 0.3s;
+      background-color: $purple;
+      color: $white;
+    }
+  }
+}

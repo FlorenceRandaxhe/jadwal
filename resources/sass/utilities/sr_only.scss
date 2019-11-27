@@ -1,0 +1,20 @@
+/*******************************/
+/***  SCREEN READER ONLY   ***/
+/****************************/
+
+/**
+ * visually hidden but available for screen readers
+ */
+.sr_only
+{
+  @include sro;
+}
+
+/**
+ * visually hidden for both screen readers and browser
+ */
+.hidden
+{
+  @include hidden;
+}
+

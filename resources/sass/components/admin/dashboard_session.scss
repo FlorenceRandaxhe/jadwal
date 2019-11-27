@@ -1,0 +1,90 @@
+.card__sessions{
+  margin-top: 2em;
+  &__list{
+    margin: 1em 0;
+  }
+  &__item{
+    background-color: $white;
+    border-radius: 3px;
+    box-shadow: $small_shadow;
+    margin-bottom: 1em;
+  }
+  &__body{
+    padding: 1em 2em;
+  }
+  &__title{
+    font-size: 18px;
+    padding-bottom: 10px;
+    font-weight: 800;
+  }
+  &__mail{
+    margin-top: 1em;
+  }
+  &__date{
+    margin-bottom: 2em;
+    @include mq('tablet'){
+      margin-bottom: 0;
+    }
+  }
+}
+.card__sessions__status{
+  width: 170px;
+  text-align:left;
+  &--active{
+    color: #77ba71;
+  }
+  &--close{
+    color:$red;
+  }
+  &--awaiting{
+    color: #e29e5b;
+  }
+}
+.card__sessions__status__text{
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  &--active:before{
+    background-color: #9fcd73;
+    box-shadow: 0 0 5px #9dff6e;
+  }
+  &--close:before{
+    background-color:$red;
+    box-shadow: 0 0 5px rgba(255, 63, 73, 0.79);
+  }
+  &--awaiting:before{
+    background-color: rgb(255, 207, 129);
+    box-shadow: 0 0 5px rgba(255, 207, 129, 0.44);
+  }
+  &:before{
+    @include pseudo();
+    top:6px;
+    left:-20px;
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+  }
+}
+.card__session__dashboard{
+  position: relative;
+  transition: 0.3s;
+  &:hover{
+    box-shadow: $big_shadow;
+    transition: 0.3s;
+  }
+}
+.link__full{
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top:0;
+  left: 0;
+
+}
+
+.dashboard__session__body{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}

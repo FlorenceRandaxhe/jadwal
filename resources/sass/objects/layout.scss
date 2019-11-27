@@ -1,0 +1,67 @@
+/*******************************/
+/***         LAYOUT        ***/
+/****************************/
+
+// New session form
+.form__container--grid{
+  display: grid;
+  grid-column-gap: 30px;
+  grid-template-areas: "a a" "b b" "c c" "d d";
+  @include mq('tablet'){
+    grid-template-areas: "a b" "c c" "d d";
+  }
+}
+.a{
+  grid-area: a;
+}
+.b{
+  grid-area: b;
+}
+.c{
+  grid-area: c;
+}
+.d{
+  grid-area: d;
+}
+
+// New teacher grid
+.form_teacher_container{
+  display: grid;
+  grid-column-gap: 30px;
+  grid-template-areas: "name name" "mail mail";
+  @include mq('tablet'){
+    grid-template-areas: "name mail" ;
+  }
+}
+.name{
+  grid-area: name;
+}
+.mail{
+  grid-area: mail;
+}
+
+
+.grid__parent{
+  display: grid;
+  grid-column-gap: 30px;
+  grid-template-areas: "a b" "c c";
+}
+.one{
+  grid-area: a;
+}
+.two{
+  justify-self: end;
+  grid-area: b;
+}
+.three{
+  grid-area: c;
+}
+
+
+// auth pages
+.body__home{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+}

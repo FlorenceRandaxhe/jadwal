@@ -1,0 +1,42 @@
+.logo__sidebar__text,
+.logo__sidebar__circle{
+  //fill:#361d32;
+  fill:$white;
+}
+
+.logo__sidebar__rec,
+.logo__sidebar__line{
+  fill:none;
+  //stroke:#fff;
+  stroke:$black;
+  stroke-width:5px;
+}
+
+.logo__sidebar__rec{
+  stroke-linejoin:round;
+}
+
+.logo__sidebar__line{
+  stroke-linecap:round;
+  stroke-miterlimit:10;
+}
+
+.logo__login__text,
+.logo__login__circle{
+  fill:$black;
+}
+
+.logo__login__rec,
+.logo__login__line{
+  fill:none;
+  stroke:$white;
+  stroke-width:6px;
+}
+
+.logo__login__rec{
+  stroke-linejoin:round;
+}
+.logo__login__line{
+  stroke-linecap:round;
+  stroke-miterlimit:10;
+}

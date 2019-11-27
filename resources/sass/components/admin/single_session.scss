@@ -1,0 +1,39 @@
+.section__single__teacher{
+  margin-bottom: 2.5em;
+}
+.section__single__form{
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  flex-direction: column-reverse;
+  form:last-of-type{
+    margin-bottom: 2em;
+  }
+  @include mq('phablet'){
+    flex-direction: row;
+    align-items: center;
+    form:last-of-type{
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+
+
+.reply__active{
+  padding:2px 15px;
+  background-color: rgba(198, 255, 144, 0.49);
+  border-radius: 50px;
+  color: #295c21;
+  font-weight: 600;
+}
+
+.reply__close{
+  padding:2px 15px;
+  background-color: rgba(245, 255, 159, 0.44);
+  border-radius: 50px;
+  color: #6f6d18;
+  font-weight: 600;
+}

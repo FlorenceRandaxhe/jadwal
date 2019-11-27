@@ -1,0 +1,18 @@
+.schedule__form__head{
+  padding: 0.6em;
+  margin-bottom: 1em;
+  background-color: $purple;
+  border-radius: 3px;
+  color: $white;
+}
+
+.schedule__form__content{
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  div{
+    min-width: 300px;
+    margin-bottom: 1em;
+  }
+}

@@ -1,0 +1,26 @@
+body{
+  font-family: $font_body;
+  font-size: $font_base;
+  color: $font_color;
+  line-height: $line_height;
+  background-color: $background_color;
+  @include push--auto;
+
+}
+.body__admin{
+  display: flex;
+}
+
+
+/* print styles */
+@media print {
+  body {
+    font-family: $font_body;
+    font-size: $font_base;
+    color: $font_color;
+    line-height: $line_height;
+    background-color: #000;
+  }
+
+}
+

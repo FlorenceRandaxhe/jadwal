@@ -1,0 +1,27 @@
+.invalid-feedback{
+  background-color: rgba(255, 93, 84, 0.14);
+  padding: 5px 10px;
+  border-radius: 3px;
+  margin: 0.8em 0;
+  border: 1px solid $red;
+}
+
+.is-invalid{
+   //background-color: rgba(255, 93, 84, 0.14);
+  //border-bottom: 1px solid $red;
+}
+
+.alert--info{
+  border-radius: 3px;
+  border: 1px solid #98b7bc;
+  padding: 3px 10px;
+  background-color: #d1ecf1;
+  margin-bottom: 1em;
+}
+
+.alert--danger{
+  border-radius: 3px;
+  border: 1px solid $red;
+  padding: 3px 10px;
+  background-color: rgba(255, 93, 84, 0.14);
+}

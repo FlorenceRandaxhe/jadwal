@@ -1,0 +1,25 @@
+.box__container{
+  background-color: $white;
+  border-radius: 5px;
+  box-shadow: $big_shadow;
+  padding: 2em 5%;
+  margin-bottom: 1em;
+  @include mq('tablet'){
+    //padding: 2em 3em;
+  }
+}
+
+.form__div:not(:last-of-type){
+  margin-bottom: 15px;
+}
+
+.form__div:last-of-type{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  a{
+    margin-top: 1em;
+    border-bottom: 1px solid $dark_purple;
+  }
+}

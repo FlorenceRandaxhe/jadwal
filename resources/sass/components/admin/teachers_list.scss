@@ -1,0 +1,41 @@
+.form__info{
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+.list__teachers{
+  margin-top: 1em;
+}
+.list__teachers__item{
+  padding: 12px 20px;
+  &:hover{
+    background-color: $grey;
+  }
+}
+.list__teachers__item div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.list__teachers__form{
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.3s;
+}
+.list__teachers__item:hover .list__teachers__form{
+  visibility: visible;
+  opacity: 1;
+  transition: 0.3s;
+}
+
+.modals__list{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5em;
+  padding: 10px;
+  &:not(:last-of-type){
+    border-bottom: 1px solid $grey;
+  }
+  &__item{
+    flex: 1;
+  }
+}

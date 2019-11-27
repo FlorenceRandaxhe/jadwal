@@ -1,0 +1,12 @@
+/*******************************/
+/***         FOOTER        ***/
+/****************************/
+.footer{
+  background-color: $black;
+  color: $white;
+  font-size: 12px;
+  box-shadow: $small_shadow;
+  &__wrapper{
+    padding: 1em 0;
+  }
+}

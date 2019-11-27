@@ -1,0 +1,25 @@
+$h1:50px;
+$h2:25px;
+$h3:20px;
+$h4:18px;
+$h5:18px;
+$h6:16px;
+
+h1 {
+  //@include font($h1, $black, 500);
+}
+h2 {
+  @include font($h2, $black, 500);
+}
+h3 {
+  @include font($h3, $black, 500);
+}
+h4 {
+  @include font($h4, $black, 500);
+}
+h5 {
+  @include font($h5, $black, 500);
+}
+h6 {
+  @include font($h6, $black, 500);
+}

@@ -1,0 +1,26 @@
+/*******************************/
+/***          FORMS         ***/
+/****************************/
+
+
+.form{
+  &__label--block{
+    padding-bottom: 1em;
+    display: block;
+  }
+  &__input--wide, &__textarea--wide{
+    width: 100%;
+  }
+  &__input--light{
+    color: $white;
+    border-bottom: 1px solid #a6a6a6;
+  }
+  &__label--in-line{
+    margin-right: 2em;
+  }
+}
+.a.form__input, .b.form__input{
+  height: 38px;
+}
+
+

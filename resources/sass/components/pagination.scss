@@ -1,0 +1,15 @@
+.pagination{
+  text-align:center;
+  margin-top: 35px;
+}
+.page-item{
+  display:inline;
+  padding:5px 11px;
+  margin:0 5px;
+}
+
+.page-item.active{
+   background-color: #7f9298;
+   color: $white;
+   border-radius: 100%;
+ }
