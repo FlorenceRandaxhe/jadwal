@@ -10,22 +10,15 @@ use Illuminate\Support\Facades\Validator;
 class TeacherController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $teachers = Teacher::where('user_id', auth()->id())->get();;
-
-        return view('admin.teachers', [
-            'teachers' => $teachers,
-        ]);
+        $teachers = Teacher::with('user')->paginate(10);
+        return view('admin.teachers', compact('teachers'));
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -34,20 +27,17 @@ class TeacherController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage
-     *
      * @param TeacherRequest $request
-     * @param Teacher $teacher
-     * @return Teacher
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(TeacherRequest $request, Teacher $teacher)
+    public function store(TeacherRequest $request)
     {
         $teacher = new Teacher();
         $teacher->name = \request('name');
         $teacher->email = \request('email');
-        $teacher->user_id = auth()->id();
-        $teacher->save();
 
+        auth()->user()->teachers()->save($teacher);
+        session()->flash('new_teacher', 'Un nouveau professeur a été créé !');
         return back();
     }
 
@@ -61,77 +51,54 @@ class TeacherController extends Controller
     }
 
 
-    public function attach(Teacher $teacher, TeacherRequest $request)
+    public function attach(TeacherRequest $request)
     {
         $teacher = Teacher::where('email', \request('email'))->first();
+        $session = $request->session()->get('session');
 
-        if ($teacher){
+        if ($teacher)
+        {
             $newRel = Teacher::find($teacher->id);
-            $newRel->sessions()->attach($request->sessionId, ['created_at' => NOW(), 'updated_at' => NOW()]);
+            $newRel->sessions()->attach($session);
             return back();
         }
 
         $newTeacher = new Teacher();
         $newTeacher->name = \request('name');
         $newTeacher->email = \request('email');
-        $newTeacher->user_id = auth()->id();
-        $newTeacher->save();
+        auth()->user()->teachers()->save($newTeacher);
 
-        $newRel = Teacher::find($newTeacher->id);
-
-        $newRel->sessions()->attach($request->sessionId, ['created_at' => NOW(), 'updated_at' => NOW()]);
+        $newTeacher->sessions()->attach($session);
         return back();
     }
 
 
-    public function detach(Teacher $teacher, Request $request)
+    public function detach(Request $request, Teacher $teacher)
     {
-        $deleteRel = Teacher::find($request->teacherId);
-        $deleteRel->sessions()->detach($request->sessionId);
+        $session = $request->session()->get('session');
+        Teacher::find($teacher->id)->sessions()->detach($session);
         return back();
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Teacher $teacher)
-    {
-       //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Teacher $teacher)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Teacher  $teacher
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Teacher $teacher)
-    {
-        //
     }
 
     /**
      * @param Teacher $teacher
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function show(Teacher $teacher, Request $request)
+    {
+        $session = $request->session()->get('session');
+        $teacher->load('modals');
+        return view('admin.modals', compact('teacher', 'session'));
+    }
+
+    /**
+     * @param Teacher $teacher
+     * @return \Illuminate\Http\RedirectResponse
      * @throws \Exception
      */
     public function destroy(Teacher $teacher)
     {
+        $teacher->sessions()->detach();
         $teacher->delete();
         return back();
     }

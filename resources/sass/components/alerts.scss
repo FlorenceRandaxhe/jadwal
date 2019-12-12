@@ -6,22 +6,70 @@
   border: 1px solid $red;
 }
 
-.is-invalid{
-   //background-color: rgba(255, 93, 84, 0.14);
-  //border-bottom: 1px solid $red;
-}
-
-.alert--info{
+.alert{
+  padding: 1.5em 2em;
   border-radius: 3px;
-  border: 1px solid #98b7bc;
-  padding: 3px 10px;
-  background-color: #d1ecf1;
   margin-bottom: 1em;
+  font-size: 17px;
+  &--head{
+    font-size: 20px;
+    font-weight: 700;
+    padding-bottom: 10px;
+  }
+  &--bottom{
+    margin-top: 1em;
+    padding-top:1em;
+    border-top: 1px solid rgba(148, 154, 157, 0.65);
+  }
+  &--info{
+    background-color: rgba(120, 190, 184, 0.44);
+    border: 1px solid rgb(120, 190, 184);
+  }
+  &--danger{
+    background-color: rgba(255, 78, 78, 0.18);
+    border: 1px solid rgb(190, 83, 74);
+  }
+  &--success{
+    background-color: rgba(105, 190, 106, 0.44);
+    border: 1px solid rgb(83, 190, 87);
+  }
 }
 
-.alert--danger{
-  border-radius: 3px;
-  border: 1px solid $red;
-  padding: 3px 10px;
-  background-color: rgba(255, 93, 84, 0.14);
+// notif
+
+.notif{
+  max-width: 600px;
+  z-index: 1;
+  position: fixed;
+  top:20px;
+  right:0;
+  opacity: 0;
+  padding:15px 30px;
+  display: inline-block;
+  border-radius: 100px;
+  animation:slide-in 10s ease-in-out;
+  &--success{
+    color: #314d2f;
+    background-color: rgb(189, 220, 179);
+    box-shadow: 0 0 20px 5px rgba(105, 190, 106, 0.2);
+  }
+}
+
+@keyframes slide-in {
+  0%{
+    right:0;
+    opacity: 0;
+  }
+  15%{
+    right:20px;
+    opacity: 1;
+  }
+  80%{
+    right:20px;
+    opacity: 1;
+  }
+  100%{
+    right:0;
+    opacity: 0;
+  }
 }

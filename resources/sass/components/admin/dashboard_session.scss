@@ -28,7 +28,7 @@
   }
 }
 .card__sessions__status{
-  width: 170px;
+  width: 200px;
   text-align:left;
   &--active{
     color: #77ba71;
@@ -41,6 +41,7 @@
   }
 }
 .card__sessions__status__text{
+  margin-left: 1.2em;
   text-transform: uppercase;
   letter-spacing: 1px;
   position: relative;
@@ -66,6 +67,10 @@
   }
 }
 .card__session__dashboard{
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 2em 5%;
+  margin-bottom: 1em;
   position: relative;
   transition: 0.3s;
   &:hover{
@@ -87,4 +92,16 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.card__sessions__mail{
+  max-width: 960px;
+  line-height: 1.5;
+  p, ul{padding-bottom:0.7em}
+  h1{font-size: 25px; padding-bottom:0.5em}
+  h2{font-size:20px; padding-bottom:0.5em}
+  h3{font-size:18px; padding-bottom:0.5em}
+  em{font-weight: 700}
+  strong{font-weight: 700}
+  ul{list-style: disc; margin-left: 2em}
 }

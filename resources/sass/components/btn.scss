@@ -9,26 +9,6 @@
   font-family: $font_body;
   font-size: 1em;
   cursor: pointer;
-  &--icon{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background-color: transparent;
-    padding: 0.3em 1em;
-    color: #636b6f;
-    svg {
-      margin-right: 10px;
-      transition: 0.3s;
-    }
-    &:hover{
-      transition: 0.3s;
-      color: $red;
-      svg {
-        transition: 0.3s;
-        stroke:$red;
-      }
-    }
-  }
   &--right{
     text-align: right;
   }
@@ -95,6 +75,34 @@
       transition: 0.3s;
       background-color: $purple;
       color: $white;
+    }
+  }
+}
+
+.btn__container{
+  margin-top: 1em;
+}
+
+.btn--icon{
+  border: none;
+  font-family: $font_body;
+  font-size: 1em;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  color: #636b6f;
+  svg {
+    margin-right: 10px;
+    transition: 0.3s;
+  }
+  &:hover{
+    transition: 0.3s;
+    color: $red;
+    svg {
+      transition: 0.3s;
+      stroke:$red;
     }
   }
 }

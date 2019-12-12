@@ -19,7 +19,17 @@
   }
 }
 
-
+.links__container{
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  a{
+    margin-top: 1em;
+  }
+  a:first-of-type{
+    margin-right: 2em;
+  }
+}
 
 
 .reply__active{

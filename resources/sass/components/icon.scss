@@ -1,5 +1,9 @@
 .icon__container{
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+}
+
+.icon__right{
+  margin-right: 10px;
 }

@@ -1,21 +1,28 @@
 @extends('layouts.app')
 @section('title', 'Les professeurs')
 @section('content')
-    <section>
-        <div class="wrapper">
+    <div class="wrapper">
+    @if(session('new_teacher'))
+        <div class="notif notif--success">
+            <p>{{session('new_teacher')}}</p>
+        </div>
+    @endif
+        <section>
             <h2 class="title__secondary">Tous les professeurs</h2>
 
             <div class="box__container">
                 @foreach($teachers as $teacher)
                     <div class="list__teachers__item">
-                        <div>
                             <p>
                                 {{$teacher->name}}
+                            </p>
+                            <p>
+                                {{$teacher->email}}
                             </p>
                             <form action="/teachers/{{$teacher->id}}" method="post" class="list__teachers__form">
                                 @csrf
                                 @method('DELETE')
-                                <button class="btn btn--icon">
+                                <button class="btn--icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#636b6f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                         <polyline points="3 6 5 6 21 6"></polyline>
                                         <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -23,7 +30,6 @@
                                     <span>Supprimer</span>
                                 </button>
                             </form>
-                        </div>
                     </div>
                 @endforeach
                     @forelse ($teachers as $teacher)
@@ -31,11 +37,9 @@
                         <p>Il n'y a pas encore de professeurs</p>
                     @endforelse
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <div class="wrapper">
+        <section>
             <h2 class="title__secondary">Ajouter des professeurs</h2>
 
             <div class="box__container">
@@ -71,7 +75,7 @@
                         @enderror
                     </div>
                     <div class="form__div">
-                        <button class="btn btn--purple">Ajouter le professeur</button>
+                        <button class="btn btn--purple">Ajouter</button>
                     </div>
                 </form>
             </div>
@@ -95,6 +99,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 @endsection

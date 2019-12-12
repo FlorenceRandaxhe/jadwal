@@ -7,19 +7,30 @@
 }
 .list__teachers__item{
   padding: 12px 20px;
+  margin-bottom: 0.3em;
   &:hover{
     background-color: $grey;
   }
 }
-.list__teachers__item div{
+.list__teachers__item{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  @include mq('tablet'){
+    p{
+      flex: 1;
+    }
+  }
+
 }
 .list__teachers__form{
-  visibility: hidden;
-  opacity: 0;
-  transition: 0.3s;
+  @include mq('tablet'){
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.3s;
+  }
+
 }
 .list__teachers__item:hover .list__teachers__form{
   visibility: visible;
@@ -27,15 +38,3 @@
   transition: 0.3s;
 }
 
-.modals__list{
-  display: flex;
-  justify-content: space-between;
-  margin-top: 0.5em;
-  padding: 10px;
-  &:not(:last-of-type){
-    border-bottom: 1px solid $grey;
-  }
-  &__item{
-    flex: 1;
-  }
-}

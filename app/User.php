@@ -4,12 +4,9 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
-
     /**
      * The attributes that are mass assignable.
      *
@@ -37,4 +34,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    // one user can have many sessions
+    public function sessions()
+    {
+        return $this->hasMany(Session::class, 'user_id');
+    }
+
+    public function teachers()
+    {
+        return $this->hasMany(Teacher::class, 'user_id');
+    }
 }

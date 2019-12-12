@@ -13,7 +13,6 @@
 
 @import "base/page";
 @import "base/headings";
-@import "base/images";
 @import "base/form_base";
 @import "base/links";
 
@@ -22,8 +21,6 @@
 @import "objects/wrapper";
 
 @import "components/generic/header";
-@import "components/generic/footer";
-@import "components/generic/hero";
 @import "components/generic/nav";
 
 @import "components/admin/dashboard";
@@ -31,8 +28,10 @@
 @import "components/admin/dashboard_session";
 @import "components/admin/single_session";
 @import "components/admin/teachers_list";
+@import "components/admin/modals_list";
 
 @import "components/teacher/form";
+@import "components/teacher/content";
 
 @import "components/home_page";
 @import "components/form";

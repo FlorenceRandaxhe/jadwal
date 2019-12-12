@@ -18,6 +18,8 @@ class CreateSessionsTable extends Migration
             $table->string('title');
             $table->text('mail');
             $table->timestamp('limit_date');
+            $table->timestamp('exam_start');
+            $table->timestamp('exam_finish');
             $table->boolean('is_complete')->default(false);
             $table->boolean('mail_send')->default(false);
             $table->timestamps();

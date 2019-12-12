@@ -8,9 +8,18 @@
 
 .wrapper
 {
-  @include wrapper(1200px, 2em, 2em)
+  @include wrapper(1200px,2em, 2em)
 }
 
 .wrapper--mid{
-  @include wrapper(900px, 2em, 2em)
+  @include wrapper(900px,  2em, 2em)
+}
+
+.wrapper--big{
+  max-width: 95%;
+  margin: 1em auto;
+}
+
+.wrapper--large{
+  @include wrapper(1300px,  2em, 2em)
 }

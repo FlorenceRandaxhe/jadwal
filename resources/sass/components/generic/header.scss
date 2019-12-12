@@ -17,7 +17,12 @@
     }
   }
 }
-
+.header__teacher{
+  padding: 1em 2%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
 .header__admin{
   z-index: 1;
   height: 100vh;
@@ -58,9 +63,8 @@
     }
   }
   &:hover:not(.header__nav__item--current){
-    //background-color: $grey;
     background-color: rgba(99, 107, 111, 0.54);
-    transition: 0.3s;
+    transition: 0.3s background-color;
   }
 }
 
@@ -108,4 +112,20 @@
   .main__admin{
     margin-left: 200px;
   }
+}
+
+
+.top__page{
+  padding: 22px 5%;
+  background-color: $white;
+  box-shadow: $small_shadow;
+  font-size: 18px;
+  position: fixed;
+  width: calc(100vw - 200px);
+  z-index: 1;
+}
+
+.auth__name{
+  font-size: 18px;
+  text-align: right;
 }

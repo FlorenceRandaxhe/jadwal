@@ -1,7 +1,7 @@
 .box__container{
   background-color: $white;
   border-radius: 5px;
-  box-shadow: $big_shadow;
+  //box-shadow: $big_shadow;
   padding: 2em 5%;
   margin-bottom: 1em;
   @include mq('tablet'){

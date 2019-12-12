@@ -40,21 +40,61 @@
   grid-area: mail;
 }
 
-
+// single session grid
 .grid__parent{
   display: grid;
   grid-column-gap: 30px;
-  grid-template-areas: "a b" "c c";
+  grid-template-areas: "a a" "b b" "c c";
+  @include mq('tablet'){
+    grid-template-areas: "a b" "c c";
+  }
 }
 .one{
   grid-area: a;
 }
 .two{
-  justify-self: end;
+  @include mq('tablet'){
+    justify-self: end;
+  }
   grid-area: b;
 }
 .three{
   grid-area: c;
+}
+
+// modals form
+.grid__container{
+  display: grid;
+  grid-column-gap: 30px;
+  grid-template-areas:'a' 'b' 'c' 'd' 'e' 'f' 'g';
+  @include mq('tablet'){
+    grid-template-areas:'a b' 'c d' 'e f' 'g g';
+  }
+  @include mq('desktop'){
+    grid-template-areas:'a b c' 'd e f' 'g g g';
+  }
+}
+
+.grid_a{
+  grid-area: a;
+}
+.grid_b{
+  grid-area: b;
+}
+.grid_c{
+  grid-area: c;
+}
+.grid_d{
+  grid-area: d;
+}
+.grid_e{
+  grid-area: e;
+}
+.grid_f{
+  grid-area: f;
+}
+.grid_g{
+  grid-area: g;
 }
 
 

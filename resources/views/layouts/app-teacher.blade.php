@@ -11,7 +11,7 @@
 </head>
 <body>
 <header class="header">
-    <div class="header__wrapper">
+    <div class="header__teacher">
         <h1 class="header__title">
             <span class="sr_only">@yield('title') - Jadwal</span>
             <svg class="logo__sidebar" xmlns="http://www.w3.org/2000/svg" height="50" viewBox="0 0 407.72 138.53">
@@ -35,6 +35,7 @@
                 </g>
             </svg>
         </h1>
+
     </div>
 </header>
 <main>
