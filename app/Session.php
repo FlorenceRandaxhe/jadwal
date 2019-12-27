@@ -8,7 +8,7 @@ class Session extends Model
 {
     protected $fillable = ['title', 'mail', 'limit_date'];
 
-    protected $dates = ['created_at', 'updated_at', 'limit_date'];
+    protected $dates = ['created_at', 'updated_at', 'limit_date', 'exam_start', 'exam_finish'];
 
     public function user()
     {
@@ -17,7 +17,9 @@ class Session extends Model
 
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class, 'session_teachers', 'session_id', 'teacher_id')->withPivot('complete_modals');
+        return $this->belongsToMany(Teacher::class, 'session_teachers', 'session_id', 'teacher_id')
+            ->withPivot('complete_modals')
+            ->where('user_id', auth()->id());
     }
 
     public function completeModals()
@@ -25,7 +27,6 @@ class Session extends Model
         return $this->hasMany(SessionTeacher::class, 'session_id')->where('complete_modals', true);
     }
 
-    // one session can have many modals
     public function oldmodals()
     {
         return $this->hasMany(Modal::class);

@@ -40,7 +40,7 @@ class ReminderMail extends Mailable implements ShouldQueue
     {
         return $this->subject('RAPPEL : Jadwal - Modalités d\'examen - ' . $this->session->title)
             ->from($this->user->email)
-            ->markdown('emails.sendMail',  ['session' => $this->session, 'teacher' => $this->teacher, 'token' => $this->token, 'user' => $this->user]);
+            ->markdown('emails.sendReminderMail',  ['session' => $this->session, 'teacher' => $this->teacher, 'token' => $this->token, 'user' => $this->user]);
     }
 
 }

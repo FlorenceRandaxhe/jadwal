@@ -2,207 +2,106 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\ReminderMailJob;
-use App\Jobs\SendMailJob;
-use App\Mail\SendMail;
-use App\Modal;
 use App\Session;
 use App\Http\Requests\ExamSessionRequest;
-use App\SessionTeacher;
 use App\Teacher;
-use App\User;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
-
 
 class SessionController extends Controller
 {
-    /**
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $examSessions = Session::with('user')->orderByDesc('limit_date')->paginate(5);
-        return view('admin.dashboard', compact('examSessions'));
+        $sessions = auth()->user()->sessions()->orderByDesc('limit_date')->paginate(4);
+        return view('admin.dashboard', compact('sessions'));
     }
 
-    /**
-     * @param  \App\Session  $examSession
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Session $examSession)
+    public function show(Session $session)
     {
-        session(['session' => $examSession]);
-        $examSession->load('teachers.modals');
-        return view('admin.show', compact('examSession'));
+        $this->authorize('update', $session);
+        session(['session' => $session]);
+        $session->load('teachers.modals');
+        return view('admin.show', compact('session'));
     }
 
-    /**
-     * @return \Illuminate\Http\Response
-     */
+    public function previewForm(Session $session)
+    {
+        $this->authorize('update', $session);
+        return view('admin.form', compact('session'));
+    }
+
     public function create(Request $request)
     {
-
-        if ($request->former)
-        {
-            $formerSessions = Session::with('user')->orderBy('created_at')->get();
+        $formerSessions = auth()->user()->sessions()->orderByDesc('created_at')->get();
+        $oldSession = [];
+        if ($request->former) {
             $oldSession = Session::find($request->former);
-            return view('admin.create', ['formerSessions' => $formerSessions, 'oldSession' => $oldSession]);
         }
-        $formerSessions = Session::with('user')->orderBy('created_at')->get();
-        return view('admin.create', ['formerSessions' => $formerSessions, 'oldSession' => '']);
-
-
+        return view('admin.create', compact('formerSessions', 'oldSession'));
     }
 
-    /**
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(ExamSessionRequest $request)
     {
-        $newSession = new Session();
-        $newSession->title = \request('title');
-        $newSession->mail = \request('mail');
-        $newSession->limit_date =  \request('limit_date');
-        $newSession->exam_start =  now();
-        $newSession->exam_finish =   now();
-        auth()->user()->sessions()->save($newSession);
+        $session = new Session();
+        $session->title = \request('title');
+        $session->mail = \request('mail');
+        $session->limit_date = \request('limit_date');
+        $session->exam_start = \request('exam_start');
+        $session->exam_finish = \request('exam_finish');
+        auth()->user()->sessions()->save($session);
 
-        if ($request->oldSession)
-        {
+        if ($request->oldSession) {
             $oldSession = Session::find($request->oldSession);
             $oldSession->load('teachers');
-            $this->attacheTeachers($oldSession->teachers, $newSession);
-            session()->flash('new_session', 'Votre nouvelle session d\'examens a été créée ! Vous pouvez maintenant envoyer le mail aux destinataires');
-            return redirect('/sessions/' . $newSession->id);
+            $this->attachTeachers($oldSession->teachers, $session);
+        } else {
+            $teachers = Teacher::all();
+            $this->attachTeachers($teachers, $session);
         }
-
-        $teachers = Teacher::all();
-        $this->attacheTeachers($teachers, $newSession);
-
         session()->flash('new_session', 'Votre nouvelle session d\'examens a été créée ! Vous pouvez maintenant envoyer le mail aux destinataires');
-        return redirect('/sessions/' . $newSession->id);
+        return redirect('/sessions/' . $session->id);
     }
 
-    protected function attacheTeachers($teachers, $newSession)
+    protected function attachTeachers($teachers, $newSession)
     {
-        foreach ($teachers as $teacher)
-        {
+        foreach ($teachers as $teacher) {
             $newSession->teachers()->attach($teacher->id);
         }
     }
 
-
-    public function edit(Session $examSession)
+    public function edit(Session $session)
     {
-        return view('admin.edit', compact('examSession'));
+        return view('admin.edit', compact('session'));
     }
 
-    public function update(ExamSessionRequest $request, Session $examSession)
+    public function update(ExamSessionRequest $request, Session $session)
     {
-        $examSession->title = \request('title');
-        $examSession->mail = \request('mail');
-        $examSession->limit_date =  \request('limit_date');
-        $examSession->exam_start =  now();
-        $examSession->exam_finish =   now();
-        $examSession->save();
+        $this->authorize('update', $session);
+        $session->title = \request('title');
+        $session->mail = \request('mail');
+        $session->limit_date = \request('limit_date');
+        $session->exam_start = \request('exam_start');
+        $session->exam_finish = \request('exam_finish');
+        $session->save();
 
-        return redirect('/sessions/' . $examSession->id);
+        return redirect('/sessions/' . $session->id);
     }
 
-    /**
-     * @param Session $examSession
-     * @return \Illuminate\Http\RedirectResponse
-     * @throws \Exception
-     */
-    public function destroy(Session $examSession)
+    public function isComplete(Session $session)
     {
-        $examSession->teachers()->detach();
-        $examSession->delete();
-        return Back();
+        $this->authorize('update', $session);
+        $session->is_complete = true;
+        $session->save();
+
+        return redirect('/sessions/' . $session->id);
     }
 
-
-    /**
-     * @param Session $examSession
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     */
-    public function isComplete(Session $examSession)
+    public function destroy(Session $session)
     {
-        $examSession->is_complete = true;
-        $examSession->save();
-
-        // complete session, delete the token so teacher can't access it anymore
-        /*$examSession->load('teachers');
-
-        foreach ($examSession->teachers as $teacher)
-        {
-            $teacher->pivot->token = '';
-            $teacher->pivot->save();
-        }*/
-        return redirect('/sessions/' . $examSession->id);
-    }
-
-    public function previewMail(Session $examSession)
-    {
-
-        $user = User::findOrFail($examSession->user_id);
-        $token = Str::random(32);
-        $examSession->load('teachers');
-
-        foreach ($examSession->teachers as $teacher)
-        {
-            return new SendMail($examSession, $teacher, $user, $token);
-        }
-    }
-
-    public function sendMail(Session $examSession)
-    {
-        $examSession->mail_send = true;
-        $examSession->save();
-
-        //$session = $request->session()->get('session');
-
-        $user = User::findOrFail($examSession->user_id);
-
-        $examSession->load('teachers');
-
-        foreach ($examSession->teachers as $teacher)
-        {
-            $teacher->pivot->token = Str::random(32);
-            $teacher->pivot->save();
-            $token = $teacher->pivot->token;
-            dispatch(new SendMailJob($examSession, $teacher, $user, $token))->delay(Carbon::now()->addSeconds(5));
-        }
-
-        session()->flash('mail_send', 'Le mail a bien été envoyé à tous les destinataires ! Il n\'y a plus qu\'a attendre leur réponse');
-        return redirect('/sessions/' . $examSession->id);
-    }
-
-    public function sendRemiderMail(Session $examSession)
-    {
-
-        $user = User::findOrFail($examSession->user_id);
-        $examSession->load('teachers');
-
-        $teachers = Teacher::all();
-        $sessions = SessionTeacher::where('complete_modals', false)->get();
-        //return $sessions;
-        foreach ($sessions as $session)
-        {
-            $teacher = Teacher::find($session->teacher_id);
-            $token = $session->token;
-            //return $sessions;
-
-            dispatch(new ReminderMailJob($examSession, $teacher, $user, $token))->delay(Carbon::now()->addSeconds(5));
-        }
-
-        session()->flash('remiderMail_send', 'Le mail a bien été envoyé aux destinataires qui n\'ont pas encore rempli leur formulaire !');
-        return redirect('/sessions/' . $examSession->id);
+        $this->authorize('update', $session);
+        $session->teachers()->detach();
+        $session->delete();
+        return redirect('/sessions');
     }
 }
 

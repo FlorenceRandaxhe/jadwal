@@ -27,6 +27,8 @@ class ExamSessionRequest extends FormRequest
             'title' => 'required',
             'mail' => 'required',
             'limit_date' => 'required|date_format:Y-m-d',
+            'exam_start' => 'required|date_format:Y-m-d',
+            'exam_finish' => 'required|date_format:Y-m-d',
         ];
     }
 }

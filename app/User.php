@@ -34,7 +34,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    // one user can have many sessions
     public function sessions()
     {
         return $this->hasMany(Session::class, 'user_id');
