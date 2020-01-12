@@ -6,7 +6,7 @@
         <section>
             <div class="dashboard__header">
                 <h2 class="">{{$teacher->name}}</h2>
-                <a class="btn btn--purple" href="/teachers/{{$teacher->id}}/pdf">Télécharger une version pdf</a>
+                <a target="_blank" class="btn btn--purple" href="/teachers/{{$teacher->id}}/pdf">Télécharger une version pdf</a>
             </div>
             <p>{{$teacher->name}} a ajouté {{count($teacher->modals)}} examen(s)</p>
 

@@ -1,0 +1,76 @@
+
+.notif__wrapper{
+	display: flex;
+	align-items: center;
+	position:relative;
+}
+.btn__notif{
+	margin-left: 1em;
+	cursor: pointer;
+	padding: 5px 5px 0;
+	border-radius:100%;
+	border:none;
+}
+.notifs{
+	position: absolute;
+	display: block;
+	z-index: 1;
+	background-color:#ECEFF4;
+	border-radius: 5px;
+    padding: 1em 0;
+    box-shadow: $small_shadow;
+    margin-bottom: 1em;
+	top: 1.6em;
+	right: 0;
+	opacity: 0;
+	visibility: hidden;
+	transition: 0.3s ease-in;
+	&__title{
+		padding:1em 1.5em;
+		font-weight: 700;
+	}
+	&__list__item, .no__notif{
+		padding:1em 1.5em;
+	}
+	&__list__item:not(:last-of-type){
+		border-bottom:1px solid #DDDDE3FF;
+	}
+}
+.yes{
+	position:relative;
+}
+.yes:after{
+    position: absolute;
+    content: "";
+    width: 8px;
+    height: 8px;
+    background-color: #CB525E;
+    top: 5px;
+    right: 6px;
+    border-radius: 100%;
+    animation:pulse 2s ease-in infinite;
+    box-shadow: 0 0 3px #CB525E;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 3px #CB525E;
+  }
+  50% {
+    box-shadow: 0 0 10px #CB525E;
+  }
+  100% {
+    box-shadow: 0 0 3px #CB525E;
+  }
+}
+.btn__notif:focus~.notifs{
+	visibility:visible;
+	opacity: 1;
+	transition: 0.3s ease-in;
+}
+
+.notif__icon:hover,
+.notif__icon:focus{
+	outline: none;
+	background-color:#fff;
+}

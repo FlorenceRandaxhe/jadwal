@@ -19,7 +19,6 @@
                                class="form__input--wide form__input--outline @error('email') is-invalid @enderror"
                                name="email"
                                value="{{ old('email') }}"
-                               placeholder="exemple@mail.com"
                                required autocomplete="email" autofocus>
                     </div>
 

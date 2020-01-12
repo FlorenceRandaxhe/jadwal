@@ -4,11 +4,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 Auth::routes();
-// manage sessions
+// sessions
 Route::resource('sessions', 'SessionController');
 Route::put('/sessions/{session}/complete', 'SessionController@isComplete')->middleware('auth');
 Route::get('/sessions/{session}/preview', 'SessionController@previewForm')->middleware('auth');
-// manage teacher
+// teacher
 Route::resource('teachers', 'TeacherController');
 Route::post('/teachers/csvfile', 'TeacherController@storecsv')->middleware('auth');
 Route::post('/teachers/attach', 'TeacherController@attach')->middleware('auth');

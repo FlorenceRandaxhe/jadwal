@@ -20,6 +20,7 @@ class MailController extends Controller
     {
         $examSession->mail_send = true;
         $examSession->save();
+
         $user = auth()->user();
         $examSession->load('teachers');
 
@@ -36,15 +37,15 @@ class MailController extends Controller
 
     public function sendRemiderMail(Session $examSession)
     {
-        $user = User::findOrFail($examSession->user_id);
-        $sessions = SessionTeacher::where('session_id', $examSession->id)->where('complete_modals', false)->get();
+        //$user = User::findOrFail($examSession->user_id);
 
-        foreach ($sessions as $session) {
-            $teacher = Teacher::find($session->teacher_id);
-            $token = $session->token;
+        $user = User::findOrFail($examSession->user_id);
+        $sessionTeachers = SessionTeacher::where('session_id', $examSession->id)->where('complete_modals', false)->get();
+        foreach ($sessionTeachers as $sessionTeacher) {
+            $teacher = Teacher::find($sessionTeacher->teacher_id);
+            $token = $sessionTeacher->token;
             dispatch(new ReminderMailJob($examSession, $teacher, $user, $token))->delay(Carbon::now()->addSeconds(5));
         }
-
         session()->flash('remiderMail_send', 'Le mail a bien été envoyé aux destinataires qui n\'ont pas encore rempli leur formulaire !');
         return redirect('/sessions/' . $examSession->id);
     }

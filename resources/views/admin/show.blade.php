@@ -22,23 +22,33 @@
                 </div>
             @endif
 
+            <div class="dashboard__header">
+                <h2 class="card__sessions__title"><a href="/sessions">Mes session</a> / {{$session->title}}</h2>
+                <form action="/sessions/{{$session->id}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn--pink btn--small">Supprimer la sessions</button>
+                </form>
+
+            </div>
             <div class="box__container ">
                 <div class="grid__parent">
 
                     <div class="one">
-                        <h2 class="card__sessions__title">Session&nbsp;: {{$examSession->title}}</h2>
-                        <p class="card__sessions__date">Date limite&nbsp;: <time datetime="{{$examSession->limit_date}}">{{$examSession->limit_date->format('d/m/Y')}}</time></p>
+                        <p class="card__sessions__date">Date limite&nbsp;: <time datetime="{{$session->limit_date}}">{{$session->limit_date->format('d/m/Y')}}</time></p>
+                        <p class="card__sessions__date">Début des examens&nbsp;: <time datetime="{{$session->exam_start}}">{{$session->exam_start->format('d/m/Y')}}</time></p>
+                        <p class="card__sessions__date">Fin des examens&nbsp;: <time datetime="{{$session->exam_finish}}">{{$session->exam_finish->format('d/m/Y')}}</time></p>
                     </div>
 
-                    @if ($examSession->is_complete)
+                    @if ($session->is_complete)
                         <div class="two card__sessions__status card__sessions__status--close">
                             <p class="card__sessions__status__text card__sessions__status__text--close">Session cloturée</p>
                         </div>
-                    @elseif (!$examSession->is_complete && !$examSession->mail_send)
+                    @elseif (!$session->is_complete && !$session->mail_send)
                         <div class="two card__sessions__status card__sessions__status--awaiting">
                             <p class="card__sessions__status__text card__sessions__status__text--awaiting">Mails non envoyés</p>
                         </div>
-                    @elseif (!$examSession->is_complete && $examSession->mail_send)
+                    @elseif (!$session->is_complete && $session->mail_send)
                         <div class="two card__sessions__status card__sessions__status--active">
                             <p class="card__sessions__status__text card__sessions__status__text--active">Session active</p>
                         </div>
@@ -47,17 +57,21 @@
                     <div class="three">
                         <div class="card__sessions__mail">
                             <span class="text--bold">Contenu du mail&nbsp;: </span>
-                            {{\Illuminate\Mail\Markdown::parse($examSession->mail)}}
-
+                            {{\Illuminate\Mail\Markdown::parse($session->mail)}}
                             <div class="links__container">
-                                @if(!$examSession->mail_send)
-                                <a class="btn btn--small btn--dark-purple" href="/sessions/{{$examSession->id}}/edit">Modifier l'email</a>
+                                @if(!$session->mail_send)
+                                <a class="icon__container btn btn--small btn--dark-purple" href="/sessions/{{$session->id}}/edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon__right"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <span>Modifier l'email</span>
+                                </a>
                                 @endif
-                                <a target="_blank" class="btn btn--small btn--purple" href="/sessions/{{$examSession->id}}/preview">Prévisualiser l'email</a>
+                                <a class="icon__container btn btn--small btn--purple" href="/sessions/{{$session->id}}/preview">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon__right"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <span>Voir le formulaire</span>
+                                </a>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -67,7 +81,7 @@
                     Liste des destinataires
                 </h2>
                 <ul class="list__teachers">
-                    @foreach($examSession->teachers as $teacher)
+                    @foreach($session->teachers as $teacher)
                         <li class="list__teachers__item ">
                             <p>
                                 {{$teacher->name}}
@@ -76,7 +90,7 @@
                                 {{$teacher->email}}
                             </p>
 
-                            @if ($examSession->mail_send === 0)
+                            @if ($session->mail_send === 0)
                                 <form action="/teachers/{{$teacher->id}}/detach" method="POST" class="list__teachers__form">
                                     @csrf
                                     <input type="hidden" name="teacherId" value="{{$teacher->id}}">
@@ -86,9 +100,11 @@
                                     </button>
                                 </form>
                             @endif
-                            @if ($examSession->mail_send === 1)
+                            @if ($session->mail_send === 1)
                                 @if($teacher->pivot->complete_modals == 1)
                                     <a href="/teachers/{{$teacher->id}}" class="reply__active">Voir les modalités</a>
+                                @elseif($session->limit_date < NOW())
+                                    <span class="reply__late">En retard</span>
                                 @else
                                     <span class="reply__close">En attente</span>
                                 @endif
@@ -98,13 +114,13 @@
                 </ul>
             </div>
         </section>
-        @if ($examSession->mail_send === 0)
+        @if ($session->mail_send === 0)
         <section>
             <h2 class="title__secondary">Ajouter un destinataire</h2>
             <div class="box__container">
                 <form action="/teachers/attach" method="POST" class="form_teacher_container">
                     @csrf
-                    <input type="hidden" name="sessionId" value="{{$examSession->id}}">
+                    <input type="hidden" name="sessionId" value="{{$session->id}}">
                     <div class="form__div name">
                         <label class="form__label--block" for="name">Nom</label>
                         <input type="text"
@@ -142,17 +158,17 @@
         </section>
         @endif
         <div class="section__single__form">
-            @if ($examSession->is_complete === 0)
-            <form action="/sessions/{{$examSession->id}}/complete" method="post">
+            @if ($session->is_complete === 0)
+            <form action="/sessions/{{$session->id}}/complete" method="post">
                 @csrf
                 @method('PUT')
-                <button @if($examSession->mail_send === 0) disabled @endif class="btn @if($examSession->mail_send === 0)btn--disabled @else btn--red @endif">
+                <button @if($session->mail_send === 0) disabled @endif class="btn @if($session->mail_send === 0)btn--disabled @else btn--red @endif">
                     Cloturer la session
                 </button>
             </form>
             @endif
-            @if ($examSession->mail_send === 0)
-            <form action="/sessions/{{$examSession->id}}/send" method="post">
+            @if ($session->mail_send === 0)
+            <form action="/sessions/{{$session->id}}/send" method="post">
                 @csrf
                 @method('PUT')
                 <button class="btn btn--purple icon__container">
@@ -160,8 +176,8 @@
                     Envoyer les e-mails
                 </button>
             </form>
-            @elseif($examSession->is_complete === 0)
-            <form action="/sessions/{{$examSession->id}}/reminder" method="post">
+            @elseif($session->is_complete === 0)
+            <form action="/sessions/{{$session->id}}/reminder" method="post">
                 @csrf
                 @method('PUT')
                 <button class="btn btn--purple icon__container">
@@ -171,6 +187,5 @@
             </form>
             @endif
         </div>
-
     </div>
 @endsection

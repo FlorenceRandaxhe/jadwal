@@ -19,6 +19,7 @@
             @endif
             <section class="form__session__container">
                 <h2 class="title__secondary">Créer une nouvelle session d'examen</h2>
+
                 <form action="/sessions" method="POST" class="form">
                     @csrf
                     <input type="hidden" name="oldSession" value="{{$oldSession ? $oldSession->id : ''}}">
@@ -54,6 +55,34 @@
                         </div>
 
                         <div class="form__div c">
+                            <label for="exam_start" class="form__label form__label--block">Date de début des examens&nbsp;:</label>
+                            <input type="date"
+                                   value="{{$oldSession ? $oldSession->exam_start->format('Y-m-d') : ''}}"
+                                   name="exam_start"
+                                   id="exam_start"
+                                   class="form__input form__input--wide @error('limit_date') is-invalid @enderror">
+                            @error('exam_start')
+                            <div class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form__div d">
+                            <label for="exam_finish" class="form__label form__label--block">Date de fin des examens&nbsp;:</label>
+                            <input type="date"
+                                   value="{{$oldSession ? $oldSession->exam_finish->format('Y-m-d') : ''}}"
+                                   name="exam_finish"
+                                   id="exam_finish"
+                                   class="form__input form__input--wide @error('limit_date') is-invalid @enderror">
+                            @error('exam_finish')
+                            <div class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                            @enderror
+                        </div>
+
+                        <div class="form__div e">
                             <label for="mail" class="form__label form__label--block">Contenu du mail&nbsp;:</label>
                             <p>#titre, ##sous-titre, **gras**, ***italique***</p>
                             <textarea name="mail"
@@ -67,7 +96,8 @@
                             @enderror
 
                         </div>
-                        <div class="form__div d">
+                        <div class="form__div f">
+                            <a href="/sessions">Annuler</a>
                             <button class="btn btn--purple">Créer la session</button>
                         </div>
                     </div>

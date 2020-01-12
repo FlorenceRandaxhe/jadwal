@@ -12,8 +12,10 @@ class SessionController extends Controller
 
     public function index()
     {
+        $notifications = auth()->user()->unreadNotifications;
+        $notifications->markAsRead();
         $sessions = auth()->user()->sessions()->orderByDesc('limit_date')->paginate(4);
-        return view('admin.dashboard', compact('sessions'));
+        return view('admin.dashboard', ['sessions' => $sessions, 'notifications' => $notifications]);
     }
 
     public function show(Session $session)
@@ -49,6 +51,9 @@ class SessionController extends Controller
         $session->exam_start = \request('exam_start');
         $session->exam_finish = \request('exam_finish');
         auth()->user()->sessions()->save($session);
+
+        //$session->user_id = 1;
+        //$session->save();
 
         if ($request->oldSession) {
             $oldSession = Session::find($request->oldSession);

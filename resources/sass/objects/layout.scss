@@ -6,9 +6,9 @@
 .form__container--grid{
   display: grid;
   grid-column-gap: 30px;
-  grid-template-areas: "a a" "b b" "c c" "d d";
+  grid-template-areas: "a a" "b b" "c c" "d d" "e e" "f f";
   @include mq('tablet'){
-    grid-template-areas: "a b" "c c" "d d";
+    grid-template-areas: "a b" "c d" "e e" "f f";
   }
 }
 .a{
@@ -22,6 +22,12 @@
 }
 .d{
   grid-area: d;
+}
+.e{
+  grid-area: e;
+}
+.f{
+  grid-area: f;
 }
 
 // New teacher grid
@@ -65,13 +71,13 @@
 // modals form
 .grid__container{
   display: grid;
-  grid-column-gap: 30px;
-  grid-template-areas:'a' 'b' 'c' 'd' 'e' 'f' 'g';
+  grid-column-gap:5%;
+  grid-template-areas:'a' 'b' 'c' 'd' 'e' 'f' 'g' 'h';
   @include mq('tablet'){
-    grid-template-areas:'a b' 'c d' 'e f' 'g g';
+    grid-template-areas:'a b' 'c d' 'e f' 'g g' 'h h';
   }
   @include mq('desktop'){
-    grid-template-areas:'a b c' 'd e f' 'g g g';
+    grid-template-areas:'a b c' 'd e f' 'g g g' 'h h h';
   }
 }
 
@@ -96,7 +102,26 @@
 .grid_g{
   grid-area: g;
 }
+.grid_h{
+  grid-area: h;
+}
 
+
+.teacher__grid__container{
+  display: grid;
+  grid-template-areas:'a' 'b';
+  @include mq('tablet-wide'){
+    grid-template-areas:'a b' 'a b';
+    grid-column-gap: 30px;
+    grid-template-columns: 295px 1fr;
+  }
+  &--child_1{
+    grid-area: b;
+  }
+  &--child_2{
+    grid-area: a;
+  }
+}
 
 // auth pages
 .body__home{

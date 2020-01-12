@@ -19,7 +19,6 @@
                                class="form__input--wide form__input--outline @error('name') is-invalid @enderror"
                                name="name"
                                value="{{ old('name') }}"
-                               placeholder="Morgane Van Moffaert"
                                required autocomplete="name" autofocus>
                     </div>
 
@@ -34,7 +33,6 @@
                                type="email"
                                class="form__input--wide form__input--outline @error('email') is-invalid @enderror"
                                name="email"
-                               placeholder="exemple@mail.com"
                                value="{{ old('email') }}"
                                required autocomplete="email">
                     </div>

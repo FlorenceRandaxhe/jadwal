@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ModalRequest;
 use App\Modal;
+use App\User;
 use App\Session;
 use App\SessionTeacher;
 use App\Teacher;
+use App\Notifications\ModalComplete;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use PDF;
 
 class ModalController extends Controller
@@ -19,8 +22,7 @@ class ModalController extends Controller
         $modals = Modal::where('teacher_id', $pivot->teacher_id)->where('session_id', $pivot->session_id)->get();
         $oldModals = Modal::all()
             ->where('teacher_id', $pivot->teacher_id)
-            ->where('session_id', '!=', $pivot->session_id)
-            ->where('save', true);
+            ->where('save', 1);
         $teacher = Teacher::find($pivot->teacher_id);
         $session = Session::find($pivot->session_id);
         $formerModal = [];
@@ -50,10 +52,11 @@ class ModalController extends Controller
         return back();
     }
 
-    public function unsave(Modal $modal, Request $request)
+    public function unsave(Modal $oldModal)
     {
-        $modal->save = false;
-        $modal->save();
+        return $oldModal;
+        $oldModal->save = 0;
+        $oldModal->save();
 
         session()->flash('duplicate_session', 'Le cours a été enlever des examens sauvgardés');
         return back();
@@ -64,7 +67,14 @@ class ModalController extends Controller
         $pivot = SessionTeacher::where('token', $token)->first();
         $pivot->complete_modals = true;
         $pivot->save();
-        session()->flash('modal_complete', 'Votre liste d\'examen a bien été envoyée');
+
+        $sess = Session::where('id', $pivot->session_id)->first();
+        $user = User::where('id', $sess->user_id)->first();
+        $teacher = Teacher::where('id', $pivot->teacher_id)->first();
+
+        Notification::send($user, new ModalComplete($teacher, $sess));
+
+        //session()->flash('modal_complete', 'Votre liste d\'examen a bien été envoyée');
         return back();
     }
 

@@ -22,6 +22,7 @@ class CreateSessionsTable extends Migration
             $table->timestamp('exam_finish');
             $table->boolean('is_complete')->default(false);
             $table->boolean('mail_send')->default(false);
+            $table->softDeletes();
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

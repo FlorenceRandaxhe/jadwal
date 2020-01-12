@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequest;
 use App\Teacher;
+use App\SessionTeacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -74,7 +75,12 @@ class TeacherController extends Controller
     public function destroy(Teacher $teacher)
     {
         $this->authorize('update', $teacher);
-        $teacher->sessions()->detach();
+        $modalsAwaiting = SessionTeacher::where('complete_modals', 0)->where('teacher_id', $teacher->id)->first();
+        if ($modalsAwaiting) {
+            session()->flash('modal_awaiting', 'Vous ne pouvez pas supprimer ce professeur car il doit encore envoyer des modalités d\'examen');
+            return back();
+        }
+        //$teacher->sessions()->detach();
         $teacher->delete();
         return back();
     }

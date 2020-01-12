@@ -24,9 +24,10 @@ class CreateModalsTable extends Migration
             $table->string('exam_duration');
             $table->string('supervisor')->nullable();
             $table->text('requests')->nullable();
+            $table->boolean('save')->default(false);
             $table->timestamps();
-            $table->foreign('teacher_id')->references('id')->on('teachers');
-            $table->foreign('session_id')->references('id')->on('exam_sessions');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('session_id')->references('id')->on('exam_sessions')->onDelete('cascade');
         });
     }
 

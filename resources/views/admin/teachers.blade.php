@@ -9,9 +9,13 @@
     @endif
         <section>
             <h2 class="title__secondary">Tous les professeurs</h2>
-
+            @if(session('modal_awaiting'))
+                <div class="alert alert--danger">
+                    <p>{{session('modal_awaiting')}}</p>
+                </div>
+            @endif
             <div class="box__container">
-                @foreach($teachers as $teacher)
+                @forelse ($teachers as $teacher)
                     <div class="list__teachers__item">
                             <p>
                                 {{$teacher->name}}
@@ -31,11 +35,9 @@
                                 </button>
                             </form>
                     </div>
-                @endforeach
-                    @forelse ($teachers as $teacher)
-                    @empty
-                        <p>Il n'y a pas encore de professeurs</p>
-                    @endforelse
+                @empty
+                    <p>Il n'y a pas encore de professeurs</p>
+                @endforelse
             </div>
         </section>
 
@@ -75,7 +77,10 @@
                         @enderror
                     </div>
                     <div class="form__div">
-                        <button class="btn btn--purple">Ajouter</button>
+                        <button class="btn btn--purple icon__container">
+                            <svg class="icon__right" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                            <span>Ajouter</span>
+                        </button>
                     </div>
                 </form>
             </div>

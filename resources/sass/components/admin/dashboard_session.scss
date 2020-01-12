@@ -15,7 +15,10 @@
   &__title{
     font-size: 18px;
     padding-bottom: 10px;
-    font-weight: 800;
+    a:hover{
+      color:$purple
+    }
+    //font-weight: 800;
   }
   &__mail{
     margin-top: 1em;

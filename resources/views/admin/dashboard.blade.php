@@ -6,37 +6,53 @@
     <section>
         <div class="dashboard__header">
             <h2 class="dashboard__title">Dashboard</h2>
-            <p class="auth__name">Bonjour, {{ Auth::user()->name }}</p>
+            <div class="notif__wrapper @if(count($notifications) > 0) yes @endif">
+                <p class="auth__name">Bonjour, {{ Auth::user()->name }}</p>
+                <button class="btn__notif notif__icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+                </button>
+                <div class="notifs notifs__container">
+                    <h3 class="notifs__title">Notifications</h3>
+                    <ul class="notifs__list">
+                        @forelse($notifications as $notification)
+                    <li class="notifs__list__item"><span class="text--bold">{{ $notification->data['teacher'] }}</span> a envoyé ses modalités d'examens pour la session de {{ $notification->data['session'] }}</p>
+                @empty
+                <li class="no__notif">Vous n'avez aucunes notifications</p>
+                @endforelse
+                    </ul>
+                </div>
+            </div>
         </div>
         <section class="card__sessions">
-            @if(count($examSessions) > 0)
+            @if(count($sessions) > 0)
             <h3>Mes sessions</h3>
 
             <ul class="card__sessions__list">
-                @foreach($examSessions as $examSession)
+                @foreach($sessions as $session)
                 <li class="card__session__dashboard">
 
-                    <a class="link__full" href="/sessions/{{$examSession->id}}"><span class="sr_only">Voir la session de {{$examSession->title}}</span></a>
+                    <a class="link__full" href="/sessions/{{$session->id}}"><span class="sr_only">Voir la session de {{$session->title}}</span></a>
                     <div class="dashboard__session__body">
                         <div>
                             <p class="card__sessions__title">
-                                Session&nbsp;: {{$examSession->title}}
+                                Session&nbsp;: {{$session->title}}
                             </p>
 
                             <p class="card__sessions__date">
-                                Date limite&nbsp;: <time datetime="{{$examSession->limit_date}}">{{$examSession->limit_date->format('d/m/Y')}}</time>
-                                <span>({{$examSession->limit_date->diffForHumans()}})</span>
+                                Date limite&nbsp;: <time datetime="{{$session->limit_date}}">{{$session->limit_date->format('d/m/Y')}}</time>
+                                <span>({{$session->limit_date->diffForHumans()}})</span>
                             </p>
                         </div>
-                        @if ($examSession->is_complete)
+                    
+                        @if ($session->is_complete)
                             <div class="card__sessions__status card__sessions__status--close">
                                 <p class="card__sessions__status__text card__sessions__status__text--close">Session cloturée</p>
                             </div>
-                        @elseif (!$examSession->is_complete && !$examSession->mail_send)
+                        @elseif (!$session->is_complete && !$session->mail_send)
                             <div class="card__sessions__status card__sessions__status--awaiting">
                                 <p class="card__sessions__status__text card__sessions__status__text--awaiting">Mail non envoyé</p>
                             </div>
-                        @elseif (!$examSession->is_complete && $examSession->mail_send)
+                        @elseif (!$session->is_complete && $session->mail_send)
                             <div class="card__sessions__status card__sessions__status--active">
                                 <p class="card__sessions__status__text card__sessions__status__text--active">Session active</p>
                             </div>
@@ -46,7 +62,7 @@
 
                 @endforeach
             </ul>
-                {{ $examSessions->links() }}
+                {{ $sessions->links() }}
 
             @else
                 <div class="div__empty box__container">
@@ -68,11 +84,10 @@
                     </div>
                     <h3 class="title__empty">Bienvenue sur Jadwal</h3>
                     <p>Votre outil destiné à la collecte des préférences des professeurs en matière d’organisation des horaires d’examen.</p>
-                    <p>Vous n'avez pas encore de session d'examen, commencer par en créer une ou ajouter des professeurs.</p>
+                    <p>Commencez par ajouter des professeurs, puis créez une session d'examen.</p>
 
                     <div class="div__empty__links">
                         <a class="btn btn--purple" href="/teachers">Ajouter des professeurs</a>
-                        <a class="btn btn--purple" href="/sessions/create">Créer une session</a>
                     </div>
                 </div>
             @endif

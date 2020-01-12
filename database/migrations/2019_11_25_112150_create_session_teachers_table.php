@@ -15,12 +15,12 @@ class CreateSessionTeachersTable extends Migration
     {
         Schema::create('session_teachers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('token')->nullable();
+            $table->string('token')->unique()->nullable();
             $table->boolean('complete_modals')->default(false);
             $table->unsignedBigInteger('session_id');
             $table->unsignedBigInteger('teacher_id');
-            $table->foreign('session_id')->references('id')->on('exam_sessions');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->foreign('session_id')->references('id')->on('exam_sessions')->onDelete('cascade');
+            $table->foreign('teacher_id')->references('id')->on('teachers')->onDelete('cascade');
             $table->unique(['session_id', 'teacher_id']);
             $table->timestamps();
         });

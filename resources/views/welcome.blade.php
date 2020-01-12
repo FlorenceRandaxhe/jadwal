@@ -10,7 +10,7 @@
                 <a class="btn btn--dark-purple" href="{{ route('register') }}">Inscription</a>
                 @endif
             @else
-                <a class="btn btn--dark-purple" href="/dashboard">
+                <a class="btn btn--dark-purple" href="/sessions">
                     Dashboard
                 </a>
             @endguest

@@ -18,26 +18,31 @@
 .mandatory__fields{
   margin-top: 1em;
 }
-
 .former__modals__list{
+  padding: 10px;
+  border: 1px solid #d8e4e9;
   display: flex;
-  flex-wrap: wrap;
-
+  @include mq('tablet-wide'){
+    flex-direction: column;
+  }
 }
 .former__modals__item{
   margin: 0.5em;
   background-color: $white;
   border-radius: 3px;
   padding: 1em;
-  min-width: 220px;
+  min-width: 250px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 .former__modals__courses__list{
   padding: 10px;
 }
 .former__modals__courses__item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
   padding:5px;
   &:not(:last-of-type){
     border-bottom: 1px solid $grey;
@@ -56,4 +61,47 @@
 
 .empty__courses{
   padding: 1em;
+}
+
+
+.teacher__grid__container--child-1{
+  margin-bottom: 1em;
+  overflow: hidden;
+}
+.former__modals__list{
+  max-height: 560px;
+  @include mq('desktop'){
+    max-height: 469px;
+  }
+  overflow: auto;
+}
+.former__modals__list::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+.former__modals__list::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: #c4ced3;
+}
+.former__modals__list::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: #b3bcc1;
+}
+.save__courses{
+  background-color:transparent;
+  border:none;
+}
+.former__modals__courses__item{
+  display: flex;
+}
+
+.former__modals__actions{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  form, a{
+    margin-top:5px; 
+  }
+
 }
