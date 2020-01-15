@@ -19,16 +19,16 @@
         </div>
     @endif
     <section class="teacher_section">
-        <h2 class="title__secondary">Modalités des examens de {{$session->title}} -  {{$teacher->name}}</h2>
+        <h2 class="title__secondary">Modalités d'examen de {{$session->title}} -  {{$teacher->name}}</h2>
         <div class="alert alert--info">
             <p class="alert--head">
                 Remarques
             </p>
-            <p class="alert--content">Afin de travailler dans les meilleures conditions, il est impératif de <span class="text--bold">renvoyer votre liste d'examen avant le {{$session->limit_date->format('d/m/Y')}}</span> même si ça ne représente rien de particulier.</p>
+            <p class="alert--content">Afin de travailler dans les meilleures conditions, il est impératif de <span class="text--bold">renvoyer votre liste d'examens avant le {{$session->limit_date->format('d/m/Y')}}</span> même si ça ne représente rien de particulier.</p>
             <p>Période d'examens&nbsp;: du {{$session->exam_start->format('d/m/Y')}} au {{$session->exam_finish->format('d/m/Y')}}</p>
             <p>Si vous le souhaitez, vous pouvez sauvegarder les cours pour les prochaines sessions</p>
             <p class="alert--bottom"> N'oubliez pas d'<span class="text--bold">envoyer votre liste de cours lorsque vous avez fini</span>, sinon l'horairiste n'aura pas accès à vos préférences.</p>
-            <p>Une fois vos modalitées envoyées <span class="text--bold">vous ne pourrez plus les modifier</span> mais vouz pourrez toujours consulter cette page.</p>
+            <p>Une fois vos modalités envoyées <span class="text--bold">vous ne pourrez plus les modifier</span>, mais vous pourrez toujours consulter cette page.</p>
         </div>
     </section>
 
@@ -47,7 +47,7 @@
                     <tr class="table__head">
                         <th class="table__head__data">Cours</th>
                         <th class="table__head__data">Groupe(s)</th>
-                        <th class="table__head__data">type d'examen</th>
+                        <th class="table__head__data">Type d'examen</th>
                         <th class="table__head__data">Local</th>
                         <th class="table__head__data">Durée de l'examen</th>
                         <th class="table__head__data">Superviseur(s)</th>
@@ -157,7 +157,7 @@
                         <input type="hidden" name="session_id" value="{{$session->id}}">
                         <div class="grid__container">
                             <div class="form__div grid_a">
-                                <label for="courses" class="form__label form__label--block">Intitulé exact du cours <span class="text--bold">*</span></label>
+                                <label for="courses" class="form__label form__label--block">Intitulé <span class="text--bold">exact</span> du cours <span class="text--bold">*</span></label>
                                 <input value="{{$formerModal ? $formerModal->courses : ''}}"
                                        type="text"
                                        name="courses"
@@ -217,19 +217,15 @@
                             </div>
 
                             <div class="form__div grid_g">
-                                <label for="requests" class="form__label form__label--block">Demandes particulières / indisponibilités / contraintes</label>
+                                <label for="requests" class="form__label form__label--block">Groupements / demandes particulières</label>
                                 <textarea name="requests" id="requests" rows="5" class="form__textarea--wide" placeholder="Ex&nbsp;: Si possible, je préférerais que mes examens aient lieux la 2e et 3e semaines">{{$formerModal ? $formerModal->requests : ''}}</textarea>
                             </div>
                             <div class="form__div grid_h">
                                 <div>
                                     <input type="checkbox" class="form__check" name="save" id="save">
                                     <label for="save">Sauvegarder le cours</label>
-                                    {{--
-                                    Explication pas très claires !!!
-                                    pour faciliter les prochaines sessions
-                                    --}}
 
-                                    <p class="mandatory__fields">Les champs suivi d'un <span class="text--bold">*</span> sont obligatoires</p>
+                                    <p class="mandatory__fields">Les champs suivis d'un <span class="text--bold">*</span> sont obligatoires</p>
                                 </div>
                                 <button class="icon__container btn btn--purple">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon__right"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>

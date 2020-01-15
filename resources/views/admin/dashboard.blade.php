@@ -15,9 +15,9 @@
                     <h3 class="notifs__title">Notifications</h3>
                     <ul class="notifs__list">
                         @forelse($notifications as $notification)
-                    <li class="notifs__list__item"><span class="text--bold">{{ $notification->data['teacher'] }}</span> a envoyé ses modalités d'examens pour la session de {{ $notification->data['session'] }}</p>
+                    <li class="notifs__list__item"><span class="text--bold">{{ $notification->data['teacher'] }}</span> a envoyé ses modalités d'examen pour la session de {{ $notification->data['session'] }}</p>
                 @empty
-                <li class="no__notif">Vous n'avez aucunes notifications</p>
+                <li class="no__notif">Vous n'avez aucune notification</p>
                 @endforelse
                     </ul>
                 </div>
@@ -33,7 +33,7 @@
 
                     <a class="link__full" href="/sessions/{{$session->id}}"><span class="sr_only">Voir la session de {{$session->title}}</span></a>
                     <div class="dashboard__session__body">
-                        <div>
+                        <div class="card__grid__one">
                             <p class="card__sessions__title">
                                 Session&nbsp;: {{$session->title}}
                             </p>
@@ -43,17 +43,21 @@
                                 <span>({{$session->limit_date->diffForHumans()}})</span>
                             </p>
                         </div>
-                    
+
+                        <div class="session__resume card__grid__two">
+                             <p>{{count($session->completeModals)}} professeur(s) sur {{count($session->modals)}} ont renvoyé leurs modalités</p>
+                        </div>
+         
                         @if ($session->is_complete)
-                            <div class="card__sessions__status card__sessions__status--close">
+                            <div class="card__sessions__status card__sessions__status--close card__grid__three">
                                 <p class="card__sessions__status__text card__sessions__status__text--close">Session cloturée</p>
                             </div>
                         @elseif (!$session->is_complete && !$session->mail_send)
-                            <div class="card__sessions__status card__sessions__status--awaiting">
+                            <div class="card__sessions__status card__sessions__status--awaiting card__grid__three">
                                 <p class="card__sessions__status__text card__sessions__status__text--awaiting">Mail non envoyé</p>
                             </div>
                         @elseif (!$session->is_complete && $session->mail_send)
-                            <div class="card__sessions__status card__sessions__status--active">
+                            <div class="card__sessions__status card__sessions__status--active card__grid__three">
                                 <p class="card__sessions__status__text card__sessions__status__text--active">Session active</p>
                             </div>
                         @endif
@@ -84,7 +88,7 @@
                     </div>
                     <h3 class="title__empty">Bienvenue sur Jadwal</h3>
                     <p>Votre outil destiné à la collecte des préférences des professeurs en matière d’organisation des horaires d’examen.</p>
-                    <p>Commencez par ajouter des professeurs, puis créez une session d'examen.</p>
+                    <p>Commencez par ajouter des professeurs, puis créer une session d'examen.</p>
 
                     <div class="div__empty__links">
                         <a class="btn btn--purple" href="/teachers">Ajouter des professeurs</a>

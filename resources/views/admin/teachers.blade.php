@@ -11,7 +11,7 @@
             <h2 class="title__secondary">Tous les professeurs</h2>
             @if(session('modal_awaiting'))
                 <div class="alert alert--danger">
-                    <p>{{session('modal_awaiting')}}</p>
+                    {{session('modal_awaiting')}}
                 </div>
             @endif
             <div class="box__container">
@@ -36,7 +36,7 @@
                             </form>
                     </div>
                 @empty
-                    <p>Il n'y a pas encore de professeurs</p>
+                    <p>Il n'y a pas encore de professeur</p>
                 @endforelse
             </div>
         </section>
@@ -87,7 +87,7 @@
 
             <div class="box__container">
                 <p class="text--bold form__info">Importer une liste de professeurs via un fichier CSV</p>
-                <form action="/csvfile" method="POST">
+                <form action="/csv" method="POST"  enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="type" value="csv">
                     <div class="form__div">

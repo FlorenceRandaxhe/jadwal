@@ -36,33 +36,21 @@
   flex-direction: column;
 }
 .former__modals__courses__list{
-  padding: 10px;
+  padding: 9px;
 }
 .former__modals__courses__item{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  flex-wrap: wrap;
-  padding:5px;
   &:not(:last-of-type){
     border-bottom: 1px solid $grey;
   }
 }
 
-.link--info{
-  border-bottom: 1px solid $dark_purple;
-  transition: 0.3s;
-  &:hover{
-    background-color: $dark_purple;
-    transition: 0.3s;
-    color: $white;
-  }
-}
 
 .empty__courses{
   padding: 1em;
 }
-
 
 .teacher__grid__container--child-1{
   margin-bottom: 1em;
@@ -91,13 +79,13 @@
   background-color:transparent;
   border:none;
 }
-.former__modals__courses__item{
-  display: flex;
-}
 
 .former__modals__actions{
+  margin-left: 1em;
+  @include mq('tablet'){
+    margin-left: 0em;
+  }
   display: flex;
-  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   form, a{

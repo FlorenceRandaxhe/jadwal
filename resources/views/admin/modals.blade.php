@@ -42,7 +42,7 @@
                             @if($modal->requests)
                                 <tr>
                                     <td colspan="6" class="table__row__data table__row__data--last">
-                                        <span class="alert--request">Demande(s) particulière(s)&nbsp;:</span>
+                                        <span class="alert--request">Demande(s) particulière(s) / groupements&nbsp;:</span>
                                         <span>{{$modal->requests}}</span>
                                     </td>
                                 </tr>

@@ -15,12 +15,15 @@ class SessionController extends Controller
         $notifications = auth()->user()->unreadNotifications;
         $notifications->markAsRead();
         $sessions = auth()->user()->sessions()->orderByDesc('limit_date')->paginate(4);
+        $sessions->load('modals', 'completeModals');
+        //return $sessions;
         return view('admin.dashboard', ['sessions' => $sessions, 'notifications' => $notifications]);
     }
 
     public function show(Session $session)
     {
         $this->authorize('update', $session);
+
         session(['session' => $session]);
         $session->load('teachers.modals');
         return view('admin.show', compact('session'));
@@ -29,6 +32,7 @@ class SessionController extends Controller
     public function previewForm(Session $session)
     {
         $this->authorize('update', $session);
+
         return view('admin.form', compact('session'));
     }
 
@@ -52,10 +56,8 @@ class SessionController extends Controller
         $session->exam_finish = \request('exam_finish');
         auth()->user()->sessions()->save($session);
 
-        //$session->user_id = 1;
-        //$session->save();
-
-        if ($request->oldSession) {
+        if ($request->oldSession) 
+        {
             $oldSession = Session::find($request->oldSession);
             $oldSession->load('teachers');
             $this->attachTeachers($oldSession->teachers, $session);
@@ -63,7 +65,9 @@ class SessionController extends Controller
             $teachers = Teacher::all();
             $this->attachTeachers($teachers, $session);
         }
-        session()->flash('new_session', 'Votre nouvelle session d\'examens a été créée ! Vous pouvez maintenant envoyer le mail aux destinataires');
+
+        session()->flash('new_session', 'La sessions '. $session->title .' a été créée ! Vous pouvez maintenant envoyer le mail aux destinataires');
+
         return redirect('/sessions/' . $session->id);
     }
 
@@ -99,6 +103,11 @@ class SessionController extends Controller
         $session->save();
 
         return redirect('/sessions/' . $session->id);
+    }
+
+    public function confirmDelete(Session $session)
+    {
+        return view('admin.delete', compact('session'));
     }
 
     public function destroy(Session $session)

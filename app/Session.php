@@ -27,6 +27,11 @@ class Session extends Model
         return $this->hasMany(SessionTeacher::class, 'session_id')->where('complete_modals', true);
     }
 
+    public function modals()
+    {
+        return $this->hasMany(SessionTeacher::class, 'session_id');
+    }
+
     public function oldmodals()
     {
         return $this->hasMany(Modal::class);

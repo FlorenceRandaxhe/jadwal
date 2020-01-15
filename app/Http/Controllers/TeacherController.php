@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TeacherRequest;
+use App\Http\Requests\CsvRequest;
 use App\Teacher;
 use App\SessionTeacher;
 use Illuminate\Http\Request;
@@ -23,17 +24,30 @@ class TeacherController extends Controller
         $teacher->email = \request('email');
         auth()->user()->teachers()->save($teacher);
 
-        session()->flash('new_teacher', 'Un nouveau professeur a été créé !');
+        session()->flash('new_teacher', $teacher->name . ' a été ajouté à votre liste de professeurs');
         return back();
     }
 
-    public function storecsv(Request $request)
+    public function storecsv(CsvRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'file' => 'required',
-        ]);
+        $handle = fopen(request('file'), "r");
+        $row = 1;
+        $arr = [];
 
-        // Store the blog post...
+        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $arr[] = $data;
+            $name = $data[0];
+            $email = $data[1];
+        
+            $newTeacher = new Teacher();
+            $newTeacher->name = $name;
+            $newTeacher->email = $email;
+            auth()->user()->teachers()->save($newTeacher);
+        }
+        fclose($handle);
+
+        session()->flash('new_csv', 'Tous les professeurs ont bien été importé !');
+        return back();
     }
 
     public function attach(TeacherRequest $request)
@@ -76,11 +90,13 @@ class TeacherController extends Controller
     {
         $this->authorize('update', $teacher);
         $modalsAwaiting = SessionTeacher::where('complete_modals', 0)->where('teacher_id', $teacher->id)->first();
-        if ($modalsAwaiting) {
-            session()->flash('modal_awaiting', 'Vous ne pouvez pas supprimer ce professeur car il doit encore envoyer des modalités d\'examen');
+
+        if ($modalsAwaiting) 
+        {
+            session()->flash('modal_awaiting', $teacher->name . ' ne peut pas être supprimé car il n\'a pas encore renvoyé toutes ses modalités d\'examen');
             return back();
         }
-        //$teacher->sessions()->detach();
+        $teacher->sessions()->detach();
         $teacher->delete();
         return back();
     }

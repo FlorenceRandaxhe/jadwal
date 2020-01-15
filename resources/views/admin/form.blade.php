@@ -3,7 +3,7 @@
 @section('content')
     <div class="wrapper">
         <section class="section__single section">
-            <h2 class="card__sessions__title"><a href="/sessions">Mes session</a> / <a href="/sessions/{{$session->id}}">{{$session->title}}</a> / Prévisualisation</h2>
+            <h2 class="card__sessions__title"><a href="/sessions">Mes sessions</a> / <a href="/sessions/{{$session->id}}">{{$session->title}}</a> / Prévisualisation</h2>
             <div class="box__container ">
                 <div class="grid__parent">
 
@@ -24,7 +24,7 @@
             </div>
             <section class="section__single section">
                 <form action="" method="POST" class="form box__container">
-                    <h3 class="title__secondary">Formulaire à remplir par les professeurs</h3>
+                    <h3 class="title__secondary">Aperçu du formulaire à remplir par les professeurs</h3>
                     <div class="grid__container">
                         <div class="form__div grid_a">
                             <label for="courses" class="form__label form__label--block">Intitulé <span class="text--bold">exact</span> du cours</label>

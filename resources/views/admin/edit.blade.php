@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title', 'Modifier une session')
+@section('title', 'Modifier la session')
 @section('content')
 
     <div class="flex_container">
         <section class="form__session__container">
-            <h2 class="title__secondary">Modifier la session d'examen</h2>
+            <h2 class="card__sessions__title"><a href="/sessions">Mes sessions</a> / <a href="/sessions/{{$session->id}}">{{$session->title}}</a> / Modifier l'email</h2>
             <form action="/sessions/{{$session->id}}" method="POST" class="form">
                 @csrf
                 @method('PUT')

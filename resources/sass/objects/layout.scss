@@ -130,3 +130,29 @@
   justify-content: center;
   min-height: 100vh;
 }
+
+
+
+
+// session card grid
+.dashboard__session__body{
+  display: grid;
+  grid-column-gap: 30px;
+  grid-template-areas: "a" "b" "c";
+  @include mq('phablet'){
+    grid-template-areas: "a c" "b b";
+  }
+  @include mq('tablet'){
+    grid-template-areas: "a b c";
+  }
+}
+.card__grid__one{
+  grid-area: a;
+}
+.card__grid__two{
+  grid-area: b;
+}
+.card__grid__three{
+  grid-area: c;
+}
+

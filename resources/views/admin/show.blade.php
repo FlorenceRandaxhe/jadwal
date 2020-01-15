@@ -23,12 +23,8 @@
             @endif
 
             <div class="dashboard__header">
-                <h2 class="card__sessions__title"><a href="/sessions">Mes session</a> / {{$session->title}}</h2>
-                <form action="/sessions/{{$session->id}}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button class="btn btn--pink btn--small">Supprimer la sessions</button>
-                </form>
+                <h2 class="card__sessions__title"><a href="/sessions">Mes sessions</a> / {{$session->title}}</h2>
+                <a class="delete__link" href="/sessions/{{$session->id}}/delete">Supprimer la session</a>
 
             </div>
             <div class="box__container ">

@@ -7,5 +7,4 @@ Cliquez sur le lien suivant pour accéder à votre formulaire :
 Remplir mon formulaire
 @endcomponent
 
-{{$user->name}}
 @endcomponent

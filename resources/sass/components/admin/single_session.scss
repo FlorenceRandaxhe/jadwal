@@ -30,7 +30,15 @@
     margin-right: 2em;
   }
 }
-
+.delete__link{
+  border-bottom: 1px solid $black;
+  transition: 0.3s;
+  &:hover{
+    border-bottom:1px solid $red;
+    transition: 0.3s;
+    color:$red;
+  }
+}
 
 .reply__active{
   padding:2px 15px;

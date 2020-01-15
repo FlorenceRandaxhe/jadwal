@@ -48,7 +48,7 @@ class ModalController extends Controller
         $newModals->save = $request->save ? 1 : 0;
         $newModals->save();
 
-        session()->flash('new_modal', 'Le cours a bien été ajouté');
+        session()->flash('new_modal', 'Le cours ' . $newModals->courses . ' a bien été ajouté');
         return back();
     }
 
@@ -58,7 +58,7 @@ class ModalController extends Controller
         $oldModal->save = 0;
         $oldModal->save();
 
-        session()->flash('duplicate_session', 'Le cours a été enlever des examens sauvgardés');
+        session()->flash('duplicate_session', 'Le cours ' . $newModals->courses . ' a été enlevé des examens sauvgardés');
         return back();
     }
 
@@ -74,7 +74,7 @@ class ModalController extends Controller
 
         Notification::send($user, new ModalComplete($teacher, $sess));
 
-        //session()->flash('modal_complete', 'Votre liste d\'examen a bien été envoyée');
+        session()->flash('modal_complete', 'Votre liste d\'examens pour la session de ' . $sess->title . ' a bien été envoyée');
         return back();
     }
 
