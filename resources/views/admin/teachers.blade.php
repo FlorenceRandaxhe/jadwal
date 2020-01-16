@@ -36,7 +36,7 @@
                             </form>
                     </div>
                 @empty
-                    <p>Il n'y a pas encore de professeur</p>
+                    <p>Vous n'avez pas encore de professeur</p>
                 @endforelse
             </div>
         </section>
@@ -86,7 +86,8 @@
             </div>
 
             <div class="box__container">
-                <p class="text--bold form__info">Importer une liste de professeurs via un fichier CSV</p>
+               <p class="text--bold">Importer une liste de professeurs via un fichier CSV</p>
+                <p class="form__info">Format du fichier csv : prénom nom, email</p>
                 <form action="/csv" method="POST"  enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="type" value="csv">

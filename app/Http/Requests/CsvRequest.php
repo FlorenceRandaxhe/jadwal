@@ -24,7 +24,7 @@ class CsvRequest extends FormRequest
     public function rules()
     {
         return [
-            'file' => 'required|file|mimes:csv'
+            'file' => 'required|mimes:csv,txt'
         ];
     }
 
@@ -37,7 +37,7 @@ class CsvRequest extends FormRequest
     {
         return [
             'file.required' => 'Sélectionnez un fichier csv',
-            'file.mimes'  => 'Le fichier sélectionné n\'est pas au bon format ! Veuilliez sélectionner un fichier au format .csv',
+            'file.mimes' => 'Mauvais format ! Sélectionnez un fichier csv'
         ];
     }
 }

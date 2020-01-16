@@ -34,19 +34,25 @@ class TeacherController extends Controller
         $row = 1;
         $arr = [];
 
-        while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-            $arr[] = $data;
-            $name = $data[0];
-            $email = $data[1];
+        while (($datas = fgetcsv($handle, 1000, ",")) !== FALSE) {
+            $arr[] = $datas;
+            $name = $datas[0];
+            $email = $datas[1];
+
+            foreach ($datas as $data) {
+               $newTeacher = Teacher::where('email', $email)->first();
         
-            $newTeacher = new Teacher();
-            $newTeacher->name = $name;
-            $newTeacher->email = $email;
-            auth()->user()->teachers()->save($newTeacher);
+                if (!$newTeacher) {
+                    $newTeacher = new Teacher();
+                    $newTeacher->name = $name;
+                    $newTeacher->email = $email;
+                    auth()->user()->teachers()->save($newTeacher);
+
+                    session()->flash('new_csv', 'Tous les professeurs ont bien été importé !');
+                }
+            }
         }
         fclose($handle);
-
-        session()->flash('new_csv', 'Tous les professeurs ont bien été importé !');
         return back();
     }
 
